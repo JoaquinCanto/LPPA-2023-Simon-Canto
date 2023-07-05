@@ -9,6 +9,7 @@
 </head>
 <body>
 <header>
+	<h1>Simon Dice</h1>
 	<nav>
 		<ul>
 			<li>Instrucciones</li>
@@ -18,25 +19,29 @@
 	<div class="separador"></div>
 </header>
 <main>
-<h1>Simon Dice</h1>
-<div class="marcador">
-	<h2>Puntaje: </h2>
-	<h2 id="puntos"></h2>
-</div>
-<div class="colores">
-	<div class="row1">
-		<div class="color rojo"></div>
-		<div class="color amarillo"></div>
+	<div class="presimon">
+		<div class="init">
+			<button type="button">Iniciar</button>
+		</div>
+		<div class="marcador">
+			<h2>Puntaje: </h2>
+			<h2 id="puntos"></h2>
+		</div>
 	</div>
-	<div class="row2">
-		<div class="color verde"></div>
-		<div class="color azul"></div>
+	<div class="simon">
+		<div class="row1">
+			<div class="color" id="rojo"></div>
+			<div class="color" id="amarillo"></div>
+		</div>
+		<div class="row2">
+			<div class="color" id="verde"></div>
+			<div class="color" id="azul"></div>
+		</div>
 	</div>
-</div>
 </main>
 <footer>
 	<div class="separador"></div>
 </footer>
-<script src=""></script>
+<script src="./Scripts/simon.js"></script>
 </body>
 </html>
