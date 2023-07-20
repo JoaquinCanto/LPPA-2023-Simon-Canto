@@ -12,36 +12,72 @@
 	<h1>Simon Dice</h1>
 	<nav>
 		<ul>
-			<li>Instrucciones</li>
-			<li>Puntajes</li>
+			<li><a href="#inst">Instrucciones</a></li>
+			<li><a href="#scores">Puntajes</a></li>
 		</ul>
 	</nav>
 	<div class="separador"></div>
 </header>
 <main>
-	<div class="presimon">
-		<div class="init">
-			<button type="button">Iniciar</button>
+	<div class="instrucciones">
+		<a id="inst"><h2>Instrucciones</h2></a>
+		<p>El juego de forma aleatoria va iluminando los cuadrantes de colores. 
+			Después de esperar, el usuario debe ir introduciendo la secuencia mostrada en el orden correcto, 
+			ayudándose de su memoria visual y sonora. Si lo consigue, este responderá con una secuencia más 
+			larga, y así sucesivamente. Si falla, el usuario debe volver a empezar. 
+			Los distintos niveles de dificultad van aumentando la velocidad de la secuencia a repetir.
+		</p>
+	</div>
+	<div class="contenedorTS">
+		<div class="tablero">
+			<div class="controles">
+				<button id="playBtn" class="control">Iniciar</button>
+				<button id="resetBtn" class="control">Reiniciar</button>
+			</div>
+			<div class="datos">
+				<div class="nivel">
+					<h2>Nivel: </h2>
+					<h2 id="level">99</h2>
+				</div>
+				<div class="temporizador">
+					<h2>Tiempo: </h2>
+					<h2 id="timer">9:99</h2>
+				</div>
+				<div class="marcador">
+					<h2>Puntaje: </h2>
+					<h2 id="puntos">9999</h2>
+				</div>
+			</div>
 		</div>
-		<div class="marcador">
-			<h2>Puntaje: </h2>
-			<h2 id="puntos"></h2>
+		<div class="simon">
+			<button id="rojo" class="color" ></button>
+			<button id="amarillo" class="color" ></button>
+			<button id="verde" class="color"></button>
+			<button id="azul" class="color" ></button>
 		</div>
 	</div>
-	<div class="simon">
-		<div class="row1">
-			<div class="color" id="rojo"></div>
-			<div class="color" id="amarillo"></div>
-		</div>
-		<div class="row2">
-			<div class="color" id="verde"></div>
-			<div class="color" id="azul"></div>
-		</div>
+	<div class="highScore">
+		<a id="scores"><h2>Top 10:</h2></a>
+		<ol>
+			<li>Aasjkfhlksadfhalsfj</li>
+			<li>B</li>
+			<li>C</li>
+			<li>D</li>
+			<li>E</li>
+			<li>F</li>
+			<li>G</li>
+			<li>H</li>
+			<li>I</li>
+			<li>J</li>
+		</ol>
 	</div>
 </main>
 <footer>
 	<div class="separador"></div>
 </footer>
 <script src="./Scripts/simon.js"></script>
+<!-- <script src="./Scripts/event-handler.js"></script> -->
+<!-- <script src="./Scripts/simon_v2.js"></script> -->
+<!-- <script src="./Scripts/main.js"></script> -->
 </body>
 </html>

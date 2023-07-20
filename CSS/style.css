@@ -1,93 +1,263 @@
-a{
+a {
 	text-decoration: none;
 	color: inherit;
 }
 
-a:visited{
+a:visited {
 	color: inherit;
 }
 
-body{
+ol {
+	list-style: decimal;
+}
+
+button {
+    padding: 1em;
+    background-color: #d4d4d4;
+    font-size: 1em;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	width: 100vw;
 	background-color: #000000;
+
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	color: #d4d4d4;
 }
 
-h1{
-	font-size: 2em;
+header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+h1 {
+	text-align: center;
+	margin: 0.5em 0em;
+
+	font-family: 'Brush Script MT', cursive;
+	font-size: 3em;
+}
+
+nav {
+	width: 100vw;
+	max-width: 600px;
+}
+
+nav ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+
+	width: 100%;
+}
+
+.separador {
+	width: 100vw;
+	margin: 1em 0em;
+	border-top: 1px #5c2be2 solid;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.instrucciones {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	order: 3;
+
+	width: 100vw;
+	margin: 1em 0.5em;
+}
+
+.instrucciones h2 {
+	font-size: 1.125em;
+	font-weight: 600;
 	margin: 0.5em 0em;
 }
 
-header{
+.instrucciones p {
+	text-align: justify;
+	font-size: 1em;
+	margin: 0em 1em;
+}
+
+.contenedorTS {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
+	order: 1;
 
-nav{
-	width: 100%;
-	max-width: 500px;
-}
-
-nav ul{
-	display: flex;
-	width: 100%;
-	flex-direction: row;
-	justify-content: space-evenly;
-}
-
-.separador{
+	width: 100vw;
 	margin: 1em 0em;
-	border-top: 1px #5c2be2 solid;
-	width: 100%;
 }
 
-main{
+.tablero {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-}
 
-.presimon{
-	display: flex;
 	width: 100%;
-	max-width: 450px;
-
-	flex-direction: row;
-	justify-content: space-evenly;
+	margin: 1em 0em;
 }
 
-.simon{
+.controles {
+	display: flex;
+	justify-content: center;
+	gap: 2em;
+	width: 100%;
+	margin: 0.5em 0em;
+}
+
+.datos {
 	display: flex;
 	flex-direction: column;
-	gap: 0.25em;
+
+	width: 50%;
+	margin: 0.5em 0em;
 }
 
-.row1, .row2{
+.nivel, .temporizador, .marcador {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-between;
+
+	margin: 0.5em 0em;
+}
+
+.simon {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
 	justify-content: center;
-	gap: 0.25em;
+	width: 75%;
+	margin: 1em 0em;
 }
 
-.color{
-	border: 1px #d4d4d4 solid;
-	width: 10em;
-	height: 10em;
-	flex-shrink: 1;
+.color {
+	display: block;
+	width: 25vw;
+	height: 25vw;
+	margin: 2vw;
+	border: 0.09em #d4d4d4 solid;
+	border-radius: 1em;
 }
 
-#rojo{
-	background-color: red;
+#rojo { background-color: #ff0000; }
+#amarillo { background-color: #ffff00; }
+#verde{ background-color: #008000; }
+#azul{ background-color: #0000ff; }
+
+.highScore {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	order: 2;
+
+	width: 100vw;
+	margin: 1em 0em;
 }
 
-#amarillo{
-	background-color: yellow;
+.highScore h2{
+	margin-left: 1em;
+	margin-bottom: 0.5em;
+}
+.highScore ol{
+	margin-left: 2.5em;
+}
+.highScore ol li{
+	margin: 0.4em 0em;
 }
 
-#verde{
-	background-color: green;
-}
+@media (min-width:600px) {
 
-#azul{
-	background-color: blue;
+	nav {
+		display: none;
+	}
+
+	main{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: flex-start;
+		width: 100%;
+	}
+
+	.instrucciones {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 1em;
+		order: 1;
+	}
+
+	.instrucciones h2 {
+		font-size: 1.875em;
+		font-weight: 600;
+		margin-bottom: 0.5em;
+	}
+
+	.instrucciones p {
+		text-align: justify;
+		font-size: 1.15em;
+	}
+
+	.contenedorTS {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		order: 2;
+
+		width: 100vw;
+		margin: 1em 0em;
+	}
+
+	.tablero {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		width: 100%;
+		margin: 1em 0em;
+	}
+	.simon {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		margin: 0.3em 0em;
+	}
+
+	.color {
+		display: block;
+		width: 14vw;
+		height: 14vw;
+		margin: 0.9vw;
+		border: 0.15em #d4d4d4 solid;
+		border-radius: 1em;
+	}
+
+	.highScore {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		order: 3;
+	
+		width: 100vw;
+		margin: 1em 0em;
+	}
 }
