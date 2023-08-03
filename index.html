@@ -6,6 +6,10 @@
 	<title>Simon Dice</title>
 	<link rel="stylesheet" type="text/css" href="./CSS/reset.css">
 	<link rel="stylesheet" type="text/css" href="./CSS/style.css">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lumanosimo&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -13,7 +17,8 @@
 	<nav>
 		<ul>
 			<li><a href="#inst">Instrucciones</a></li>
-			<li><a href="#scores">Puntajes</a></li>
+			<li><a href="#puntajes">Puntajes</a></li>
+			<li><a href="http://">Contacto</a></li>
 		</ul>
 	</nav>
 	<div class="separador"></div>
@@ -30,18 +35,22 @@
 	</div>
 	<div class="contenedorTS">
 		<div class="tablero">
+			<div class="formNombre">
+				<input id="nombre" type="text" placeholder="¡Ingresa tu nombre!">
+				<p id="nombreAlerta">Deben ser tres letras como minimo.</p>
+			</div>
 			<div class="controles">
-				<button id="playBtn" class="control">Iniciar</button>
-				<button id="resetBtn" class="control">Reiniciar</button>
+				<button id="jugarBtn" class="control">Jugar</button>
+				<button id="reiniciarBtn" class="control">Reiniciar</button>
 			</div>
 			<div class="datos">
 				<div class="nivel">
 					<h2>Nivel: </h2>
-					<h2 id="level">99</h2>
+					<h2 id="level">1</h2>
 				</div>
 				<div class="temporizador">
 					<h2>Tiempo: </h2>
-					<h2 id="timer">9:99</h2>
+					<h2 id="timer">0:00</h2>
 				</div>
 				<div class="marcador">
 					<h2>Puntaje: </h2>
@@ -57,7 +66,7 @@
 		</div>
 	</div>
 	<div class="highScore">
-		<a id="scores"><h2>Top 10:</h2></a>
+		<a id="puntajes"><h2>Top 10:</h2></a>
 		<ol>
 			<li>Aasjkfhlksadfhalsfj</li>
 			<li>B</li>
@@ -76,8 +85,5 @@
 	<div class="separador"></div>
 </footer>
 <script src="./Scripts/simon.js"></script>
-<!-- <script src="./Scripts/event-handler.js"></script> -->
-<!-- <script src="./Scripts/simon_v2.js"></script> -->
-<!-- <script src="./Scripts/main.js"></script> -->
 </body>
 </html>

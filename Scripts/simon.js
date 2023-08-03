@@ -1,124 +1,114 @@
-//SELECTORES
+'use strict'
+
+//Botones
+var play = document.getElementById('jugarBtn');
+var reset = document.getElementById('reiniciarBtn');
 var rojo = document.getElementById('rojo');
 var amarillo = document.getElementById('amarillo');
 var verde = document.getElementById('verde');
 var azul = document.getElementById('azul');
 
-//FUNCIONES
+//Variables
+var nombre = document.getElementById('nombre');
+var nombreAlerta = document.getElementById('nombreAlerta');
 
-rojo.addEventListener('mousedown', encender);
-rojo.addEventListener('mouseup', apagar);
+var alfRegEx = /^[a-zA-Z]+$/;
 
-amarillo.addEventListener('mousedown', encender);
-amarillo.addEventListener('mouseup', apagar);
+var secuencia = [];
+var colores = ['rojo', 'amarillo', 'azul', 'verde']; //'rojo','rojo','rojo',
 
-verde.addEventListener('mousedown', encender);
-verde.addEventListener('mouseup', apagar);
+//EventListeners
+nombre.addEventListener('blur', checkNombre);
+nombre.addEventListener('focus', esconder);
 
-azul.addEventListener('mousedown', encender);
-azul.addEventListener('mouseup', apagar);
+play.addEventListener('click', playEventHandler);
+reset.addEventListener('click', resetEventHandler);
 
-function encender(id)
+rojo.addEventListener('click', rojoEventHandler);
+amarillo.addEventListener('click', amarilloEventHandler);
+verde.addEventListener('click', verdeEventHandler);
+azul.addEventListener('click', azulEventHandler);
+
+
+
+//Funciones
+function checkNombre()
 {
-	var aux;
-	if (typeof id === 'string')
+	if (!(nombre.value.length >= 3 && alfRegEx.test(nombre.value)))
 	{
-		aux = id;
+		nombreAlerta.style.visibility = 'visible';
 	}
-	else
-	{
-		aux = id.target.id;
-	}
-	switch(aux)
-	{
+}
+
+function esconder()
+{
+	nombreAlerta.style.visibility = 'hidden';
+}
+
+var cambio = function(id)
+{
+	id.classList.toggle('iluminar');
+}
+
+var iluminarColor = function(color){
+	switch(color) {
 		case 'rojo':
-			rojo.style.backgroundColor = '#ff9090';
+			cambio(rojo);
+			setTimeout(function(){ cambio(rojo)}, 1000);
 			break;
 		case 'amarillo':
-			amarillo.style.backgroundColor = '#fdfd9a';
+			cambio(amarillo);
+			setTimeout(function(){ cambio(amarillo)}, 1000);
 			break;
 		case 'verde':
-			verde.style.backgroundColor = '#4e804e';
+			cambio(verde);
+			setTimeout(function(){ cambio(verde)}, 1000);
 			break;
 		case 'azul':
-			azul.style.backgroundColor = '#8f8fff';
+			cambio(azul);
+			setTimeout(function(){ cambio(azul)}, 1000);
 			break;
 	}
 }
 
-function apagar(id)
-{
-	var aux;
-	if (typeof id === 'string')
-	{
-		aux = id;
-	}
-	else
-	{
-		aux = id.target.id;
-	}
-	switch(aux)
-	{
-		case 'rojo':
-			rojo.style.backgroundColor = 'red';
-			break;
-		case 'amarillo':
-			amarillo.style.backgroundColor = 'yellow';
-			break;
-		case 'verde':
-			verde.style.backgroundColor = 'green';
-			break;
-		case 'azul':
-			azul.style.backgroundColor = 'blue';
-			break;
-	}
+var prenderColor = function(color, i) {
+    setTimeout(function(){ iluminarColor(color)}, 2000 * i);
 }
 
-var lightUP = function(n)
-{
-	switch(n)
-	{
-		case 0:
-			encender(rojo.id);
-			break;
-		case 1:
-			encender(amarillo.id);
-			break;
-		case 2:
-			encender(verde.id);
-			break;
-		case 3:
-			encender(azul.id);
-			break;
-	}
+var mostrarSecuencia = function() {
+    secuencia.forEach(prenderColor);
+	console.log(secuencia);
 }
 
-var lightOUT = function (n)
+function playEventHandler()
 {
-	switch(n)
-	{
-		case 0:
-			apagar(rojo.id);
-			break;
-		case 1:
-			apagar(amarillo.id);
-			break;
-		case 2:
-			apagar(verde.id);
-			break;
-		case 3:
-			apagar(azul.id);
-			break;
-	}
+	var colorPos = Math.floor(Math.random() * 4);
+	var nColor = colores[colorPos];
+	secuencia.push(nColor);
+	mostrarSecuencia();
 }
 
-var n;
-var loopty = function ()
+function resetEventHandler()
 {
-	n = Math.floor(Math.random() * 4);
-	console.log(n)
-	lightUP(n);
-	setTimeout(lightOUT, 1000, n);
+	console.log('click en reset');
 }
-	
-setInterval(loopty, 4000);
+
+function rojoEventHandler()
+{
+	console.log('click en rojo');
+}
+
+function amarilloEventHandler()
+{
+	console.log('click en amarillo');
+}
+
+function verdeEventHandler()
+{
+	console.log('click en verde');
+}
+
+function azulEventHandler()
+{
+	console.log('click en azul');
+}
