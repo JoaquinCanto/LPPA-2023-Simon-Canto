@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Simon Dice</title>
+	<link rel="stylesheet" type="text/css" href="./CSS/reset.css">
+	<link rel="stylesheet" type="text/css" href="./CSS/style.css">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lumanosimo&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+	<h1>Simon Dice</h1>
+	<nav>
+		<ul>
+			<li><a href="./index.html#inst">Instrucciones</a></li>
+			<li><a href="./index.html#puntajes">Puntajes</a></li>
+			<li><a href="./contacto.html">Contacto</a></li>
+		</ul>
+	</nav>
+	<div class="separador"></div>
+</header>
+<main>
+	<form class="formulario">
+		<input id="nombre" class="campo" type="text" name="nombre" placeholder="Nombre">
+		<p id="alertaNombre" class="alerta" >Debe tener más de 6 letras y al menos un espacio entre medio.</p>
+
+		<input id="email" class="campo" type="email" name="email" placeholder="Email">
+		<p id="alertaEmail" class="alerta">Debe tener un formato de email válido.</p>
+
+		<textarea id="mensaje" class="campo" name="mensaje" rows="5" placeholder="Tu mensaje..."></textarea>
+		<p id="alertaMensaje" class="alerta">Debe tener un formato de email válido.</p>
+
+		<input id="enviar" class="enviar"  type="button" value="Enviar">
+	</form>
+</main>
+<footer>
+	<div class="separador"></div>
+</footer>
+<script src="./Scripts/contacto.js"></script>
+</body>
+</html>
