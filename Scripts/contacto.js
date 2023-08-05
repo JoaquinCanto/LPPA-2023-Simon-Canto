@@ -93,6 +93,6 @@ function enviar()
 
 		var mailToLink = `mailto:${email.value}?subject=${encodeURIComponent(subject)} &body=${encodeURIComponent(body)}`;
 
-		window.location.href = mailToLink; // Abre el cliente de correo predeterminado
+		window.location.href = mailToLink;	// Abre el cliente de correo predeterminado
 	}
 }
