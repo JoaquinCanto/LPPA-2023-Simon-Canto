@@ -1,3 +1,5 @@
+'use strict'
+
 //Variables
 var nombre = document.getElementById('nombre');
 var alertaNombre = document.getElementById('alertaNombre');
@@ -20,7 +22,7 @@ email.addEventListener('focus', hide);
 mensaje.addEventListener('blur', checkMensaje);
 mensaje.addEventListener('focus', hide);
 
-// RegEx
+//RegEx
 var alfNumRegEx = /^[a-zA-Z0-9]+$/;
 var mailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
