@@ -13,7 +13,7 @@
 </head>
 <body>
 <header>
-	<h1>Simon Dice</h1>
+	<a href="./index.html"><h1>Simon Dice</h1></a>
 	<nav>
 		<ul>
 			<li><a href="./index.html#inst">Instrucciones</a></li>
@@ -32,13 +32,12 @@
 			<button id="reiniciarBtn" class="control">Reiniciar</button>
 		</div>
 	</div>
-	<div class="instrucciones">
+	<div id="instrucciones" class="modal">
 		<a id="inst"><h2>Instrucciones</h2></a>
 		<p>El juego de forma aleatoria va iluminando los cuadrantes de colores. 
 			Después de esperar, el usuario debe ir introduciendo la secuencia mostrada en el orden correcto, 
 			ayudándose de su memoria visual y sonora. Si lo consigue, este responderá con una secuencia más 
-			larga, y así sucesivamente. Si falla, el usuario debe volver a empezar. 
-			Los distintos niveles de dificultad van aumentando la velocidad de la secuencia a repetir.
+			larga, y así sucesivamente. Si falla, el usuario debe volver a empezar.
 		</p>
 	</div>
 	<div class="contenedorTS">
@@ -49,6 +48,7 @@
 		<div class="tablero">
 			<div class="controles">
 				<button id="jugarBtn" class="control">Jugar</button>
+				<button id="test" class="control">Test</button>
 			</div>
 			<div class="datos">
 				<div class="niveles">

@@ -18,7 +18,6 @@ button {
 	color: #000000;
 	border: none;
 	border-radius: 4px;
-/*	border-radius: 100%;*/
 	cursor: pointer;
 }
 
@@ -31,7 +30,7 @@ body {
 	width: 100vw;
 	background-color: #000000;
 
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	font-family: 'Quicksand', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	color: #d4d4d4;
 }
 
@@ -45,7 +44,7 @@ h1 {
 	text-align: center;
 	margin: 0.5em 0em;
 	
-	font-family: 'Lumanosimo', 'Brush Script MT', cursive;
+	font-family: 'Tektur', 'Brush Script MT', cursive;
 	font-size: 3em;
 }
 
@@ -70,29 +69,60 @@ nav ul {
 
 main {
 	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: flex-start;
+	width: 100%;
+}
+
+.modal {
+	display: none; 
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+
+	background-color: #00000066;
+}
+
+.juegoTerminado {
+	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 1em;
+	
+	width: 12em;
+	height: 12em;
+	background-color: #000000;
+	border: 1px solid #d4d4d4;
+	margin: 15% auto;
+	padding: 1.1em;
+	
+	
 }
 
 .instrucciones {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	order: 3;
 
 	width: 100vw;
-	margin: 1em 0.5em;
+	margin: 1em;
 }
 
 .instrucciones h2 {
-	font-size: 1.125em;
+	font-size: 1.875em;
 	font-weight: 600;
-	margin: 0.5em 0em;
+	margin-bottom: 0.5em;
 }
 
 .instrucciones p {
 	text-align: justify;
-	font-size: 1em;
+	font-size: 1.15em;
 	margin: 0em 1em;
 }
 
@@ -100,20 +130,51 @@ main {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	order: 1;
 
 	width: 100vw;
 	margin: 1em 0em;
+	
+	position: relative;
+	max-width: 38em;
+	max-height: 100%;
 }
 
 .tablero {
-	display: flex;
+	/* display: flex;
 	flex-direction: column;
 	align-items: center;
 
+	position: absolute;
+	top: 25%;
 	width: 100%;
-	margin: 1em 0em;
+	height: 100%;
+	max-width: 18em;
+	max-height: 18em;
+	
+	background-color: #000000;
+	border: 0.4em solid #d4d4d4;
+	border-radius: 20em;
+	box-sizing: border-box; */
+
+	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	background: black;
+	height: 250px;
+	width: 250px;
+
+	position: absolute;
+	top: 30%;
+
+	border-radius: 50%;
+	border: 0.4em solid #d4d4d4;
+
+	box-sizing: border-box;
 }
+
 
 .formNombre {
 	display: flex;
@@ -147,7 +208,7 @@ main {
 	margin: 0.5em 0em;
 }
 
-.nivel, .temporizador, .marcador {
+.niveles, .temporizador, .marcador {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -160,24 +221,24 @@ main {
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-	width: 75%;
-	margin: 1em 0em;
+	width: 100%;
+	margin: 0.3em 0em;
 }
 
 .color {
 	display: block;
-	width: 25vw;
-	height: 25vw;
-	margin: 2vw;
-	border: 0.09em #d4d4d4 solid;
+	width: 14vw;
+	height: 14vw;
+	margin: 0.9vw;
+	border: 0.15em #d4d4d4 solid;
 	border-radius: 1em;
-	box-shadow: none;
-}
 
+}
+/*
 .color:active{
 	filter: brightness(400%);
 	box-shadow: 0em 0.1em 0.7em #d4d4d4;
-}
+}*/
 
 #rojo {
 	background-color: #8b0000;
@@ -215,105 +276,39 @@ main {
 	box-shadow: 0em 0.1em 0.7em #d4d4d4;
 }
 
-.highScore {
-	display: flex;
+.topDiez {
+	display: none;
+	/* display: flex;
 	flex-direction: column;
-	align-items: center;
-	order: 2;
+	align-items: center; */
 
 	width: 100vw;
 	margin: 1em 0em;
 }
 
-.highScore h2 {
+.topDiez h2 {
 	margin-left: 1em;
 	margin-bottom: 0.5em;
 }
 
-.highScore ol {
+.topDiez ol {
 	margin-left: 2.5em;
 }
 
-.highScore ol li {
+.topDiez ol li {
 	margin: 0.4em 0em;
 }
 
-@media (min-width:600px) {
+.alerta {
+	visibility: hidden;
+	margin: 0.2em;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 1em;
+}
 
-	nav {
-		display: none;
-	}
-
-	main {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		align-items: flex-start;
-		width: 100%;
-	}
-
-	.instrucciones {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin: 1em;
-		order: 1;
-	}
-
-	.instrucciones h2 {
-		font-size: 1.875em;
-		font-weight: 600;
-		margin-bottom: 0.5em;
-	}
-
-	.instrucciones p {
-		text-align: justify;
-		font-size: 1.15em;
-	}
-
-	.contenedorTS {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		order: 2;
-
-		width: 100vw;
-		margin: 1em 0em;
-	}
-
-	.tablero {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-
-		width: 100%;
-		margin: 1em 0em;
-	}
-	.simon {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		margin: 0.3em 0em;
-	}
-
-	.color {
-		display: block;
-		width: 14vw;
-		height: 14vw;
-		margin: 0.9vw;
-		border: 0.15em #d4d4d4 solid;
-		border-radius: 1em;
-	}
-
-	.highScore {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		order: 3;
-	
-		/* width: 33%; */
-		margin: 1em 0em;
-	}
+footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1em;
 }
