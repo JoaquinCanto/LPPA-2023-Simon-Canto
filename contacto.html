@@ -23,6 +23,34 @@
 	</nav>
 	<div class="separador"></div>
 </header>
+<div id="modalI" class="modal">
+	<div class="instrucciones">
+		<h2>Instrucciones</h2>
+		<p>El juego de forma aleatoria va iluminando los cuadrantes de colores. 
+			Después de esperar, el usuario debe ir introduciendo la secuencia mostrada en el orden correcto, 
+			ayudándose de su memoria visual y sonora. Si lo consigue, este responderá con una secuencia más 
+			larga, y así sucesivamente. Si falla, el usuario debe volver a empezar.
+		</p>
+		<p id="cerrarI" class="iconoX">&#10006;</p>
+	</div>
+</div>
+<div id="modalTD" class="modal">
+	<div class="topDiez">
+		<a id="puntajes"><h2>Top 10:</h2></a>
+		<table id="tablaPuntuaciones">
+			<thead>
+				<tr>
+					<th id="ordenFecha">Fecha</th>
+					<th>Nombre</th>
+					<th>Nivel</th>
+					<th id="ordenPuntaje">Puntuación</th>
+				</tr>
+			</thead>
+			<tbody id="tablaContenido"></tbody>
+		</table>
+		<p id="cerrarTD" class="iconoX">&#10006;</p>
+	</div>
+</div>
 <main>
 	<form class="formulario">
 		<input id="nombre" class="campo" type="text" name="nombre" placeholder="Nombre">
