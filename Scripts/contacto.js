@@ -27,13 +27,13 @@ var ordenarFecha = document.getElementById('ordenFecha');
 var ordenarPuntaje = document.getElementById('ordenPuntaje');
 
 //Eventos
-nombre.addEventListener('blur', checkNombre);
+nombre.addEventListener('blur', checkearNombre);
 nombre.addEventListener('focus', hide);
 
-email.addEventListener('blur', checkEmail);
+email.addEventListener('blur', checkearEmail);
 email.addEventListener('focus', hide);
 
-mensaje.addEventListener('blur', checkMensaje);
+mensaje.addEventListener('blur', checkearMensaje);
 mensaje.addEventListener('focus', hide);
 
 instruccionesBtn.addEventListener('click', function(){ mostrar(modalInstrucciones) });
@@ -68,20 +68,6 @@ function show(id)
 	id.style.visibility = 'visible';
 }
 
-//Llenar tabla de puntuaciones
-var llenarTabla = function(top)
-{
-	contenidoTabla.innerHTML = "";
-
-	top.forEach((partida) =>{
-		var fila = document.createElement('tr');
-		fila.innerHTML ="<td>"+partida.fecha+"</td>"+
-						"<td>"+partida.nombre+"</td>"+
-						"<td>"+partida.nivel+"</td>"+
-						"<td>"+partida.puntaje+"</td>";
-		contenidoTabla.appendChild(fila);
-	});
-}
 
 var obtenerListaPartidas = function()
 {
@@ -94,6 +80,36 @@ var obtenerListaPartidas = function()
 	return JSON.parse(listaPartidas);
 }
 
+function mostrar(id)
+{
+	id.classList.toggle('mostrar');
+
+	if(id === modalTopDiez)
+	{
+		fDes.style.display = 'none';
+		fAsc.style.display = 'none';
+
+		pDes.style.display = 'inline';
+		pAsc.style.display = 'none';
+		var top = mejoresDiez();
+		llenarTabla(top);
+	}
+}
+
+var llenarTabla = function(top)
+{
+	contenidoTabla.innerHTML = '';
+
+	top.forEach((partida) =>{
+		var fila = document.createElement('tr');
+		fila.innerHTML ='<td>'+partida.fecha+'</td>'+
+						'<td>'+partida.nombre+'</td>'+
+						'<td>'+partida.nivel+'</td>'+
+						'<td>'+partida.puntaje+'</td>';
+		contenidoTabla.appendChild(fila);
+	});
+}
+
 var mejoresDiez = function()
 {
 	var listaPartidas = obtenerListaPartidas();
@@ -102,30 +118,32 @@ var mejoresDiez = function()
 	return top;
 }
 
-function mostrar(id)
-{
-	id.classList.toggle('mostrar');
-
-	if(id === modalTopDiez)
-	{
-		var top = mejoresDiez();
-		llenarTabla(top);
-	}
-}
-
 function ordenarTablaFecha()
 {
 	var top = mejoresDiez()
 
-	if (direccionFecha == "des")
+	if (direccionFecha == 'des')
 	{
 		top.sort(function (a, b) { return b.fecha.localeCompare(a.fecha)});
-		direccionFecha = "asc";
+
+		fDes.style.display = 'inline';
+		fAsc.style.display = 'none';
+
+		pDes.style.display = 'none';
+		pAsc.style.display = 'none';
+
+		direccionFecha = 'asc';
 	}
 	else
 	{
 		top.sort(function (a, b) { return a.fecha.localeCompare(b.fecha)});
-		direccionFecha = "des";
+		fDes.style.display = 'none';
+		fAsc.style.display = 'inline';
+
+		pDes.style.display = 'none';
+		pAsc.style.display = 'none';
+
+		direccionFecha = 'des';
 	}
 
 	llenarTabla(top);
@@ -135,22 +153,36 @@ function ordenarTablaPuntaje()
 {
 	var top = mejoresDiez()
 
-	if (direccionPuntaje == "des")
+	if (direccionPuntaje == 'des')
 	{
 		top.sort((a, b) => b.puntaje - a.puntaje);;
-		direccionPuntaje = "asc";
+
+		pDes.style.display = 'inline';
+		pAsc.style.display = 'none';
+
+		fDes.style.display = 'none';
+		fAsc.style.display = 'none';
+
+		direccionPuntaje = 'asc';
 	}
 	else
 	{
 		top.sort((a, b) => a.puntaje - b.puntaje);
-		direccionPuntaje = "des";
+
+		pDes.style.display = 'none';
+		pAsc.style.display = 'inline';
+
+		fDes.style.display = 'none';
+		fAsc.style.display = 'none';
+
+		direccionPuntaje = 'des';
 	}
 
 	llenarTabla(top);
 }
 
 //Validaciones
-function checkNombre()
+function checkearNombre()
 {
 	if (!(nombre.value.length >= 3 && alfNumRegEx.test(nombre.value)))
 	{
@@ -163,7 +195,7 @@ function checkNombre()
 	}
 }
 
-function checkEmail()
+function checkearEmail()
 {
 	if (!(mailRegEx.test(email.value)))
 	{
@@ -176,7 +208,7 @@ function checkEmail()
 	}
 }
 
-function checkMensaje()
+function checkearMensaje()
 {
 	if (!(mensaje.value.length > 5))
 	{
@@ -194,7 +226,7 @@ btnEnviar.addEventListener('click', enviar);
 
 function enviar()
 {
-	if (checkNombre() && checkEmail() && checkMensaje())
+	if (checkearNombre() && checkearEmail() && checkearMensaje())
 	{
 		var subject = 'LPPA - Simon Dice';
 		var body = `¡Soy ${nombre.value} !\n${mensaje.value}.`;

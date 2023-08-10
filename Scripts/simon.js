@@ -25,9 +25,9 @@ var tiempoText = document.getElementById('contador');
 var puntajeFinalText = document.getElementById('puntajeFinal');
 
 var modalJuegoTerminado = document.getElementById('modalJT');
-var contenidoTabla = document.getElementById('tablaContenido');
 var modalInstrucciones = document.getElementById('modalI');
 var modalTopDiez = document.getElementById('modalTD');
+var contenidoTabla = document.getElementById('tablaContenido');
 
 var ordenarFecha = document.getElementById('ordenFecha');
 var fDes = document.getElementById('fDes');
@@ -44,18 +44,18 @@ var alfRegEx = /^[a-zA-Z]+$/;
 var puntos = 0;
 var puntajeFinal = 0;
 var nivel = 0;
-var tiempo = 0;								//Tiempo transcurrido en el juego.
-var contador;								//contiene el ID de setInterval para despues poder detenerlo.
+var tiempo = 0;											//Tiempo transcurrido en el juego.
+var contador;											//contiene el ID de setInterval para despues poder detenerlo.
 var secuencia = [];
 var jugador = [];
 var colores = ['rojo', 'amarillo', 'azul', 'verde'];
-var enJuego = false; 						//variable global para indicar el estado del juego.
-var i = 0; 									//variable global que se usa en checkColor()
-var direccionFecha = "des";
-var direccionPuntaje = "asc";
+var enJuego = false; 									//variable global para indicar el estado del juego.
+var i = 0; 												//variable global que se usa en checkColor()
+var direccionFecha = 'des';
+var direccionPuntaje = 'asc';
 
 //Eventos
-nombre.addEventListener('blur', checkNombre);
+nombre.addEventListener('blur', checkearNombre);
 nombre.addEventListener('focus', esconder);
 
 instruccionesBtn.addEventListener('click', function(){ mostrar(modalInstrucciones) });
@@ -65,16 +65,16 @@ cerrarModalTD.addEventListener('click', function(){ mostrar(modalTopDiez) });
 ordenarFecha.addEventListener('click', ordenarTablaFecha);
 ordenarPuntaje.addEventListener('click', ordenarTablaPuntaje);
 
-jugar.addEventListener('click', jugarEventHandler);
-reset.addEventListener('click', resetEventHandler);
+jugar.addEventListener('click', eventoJugar);
+reset.addEventListener('click', eventoResetear);
 
-rojo.addEventListener('click', rojoEventHandler);
-amarillo.addEventListener('click', amarilloEventHandler);
-verde.addEventListener('click', verdeEventHandler);
-azul.addEventListener('click', azulEventHandler);
+rojo.addEventListener('click', eventoRojo);
+amarillo.addEventListener('click', eventoAmarillo);
+verde.addEventListener('click', eventoVerde);
+azul.addEventListener('click', eventoAzul);
 
 //Funciones
-function checkNombre()
+function checkearNombre()
 {
 	if (!(nombre.value.length >= 3 && alfRegEx.test(nombre.value)))
 	{
@@ -98,17 +98,15 @@ function mostrar(id)
 
 	if(id === modalTopDiez)
 	{
-		fDes.style.display = "none";
-		fAsc.style.display = "none";
+		fDes.style.display = 'none';
+		fAsc.style.display = 'none';
 
-		pDes.style.display = "inline";
-		pAsc.style.display = "none";
+		pDes.style.display = 'inline';
+		pAsc.style.display = 'none';
 		var top = mejoresDiez();
 		llenarTabla(top);
 	}
 }
-
-
 
 var interruptor = function(id)
 {
@@ -162,6 +160,72 @@ var generarSecuencia = function()
 	mostrarSecuencia();
 }
 
+var resetearJugador = function()
+{
+	i = 0;
+	jugador = [];
+}
+
+var obtenerListaPartidas = function()
+{
+	var listaPartidas = localStorage.getItem('Partidas');		//si no existe devuelve una lista vacia
+	if (!listaPartidas)	
+	{
+		return [];
+	}
+
+	return JSON.parse(listaPartidas);
+}
+
+function generarFecha()
+{
+	var fecha = new Date();
+
+	var dia = String(fecha.getDate()).padStart(2, '0');
+	var mes = String(fecha.getMonth() + 1).padStart(2, '0');
+	var anio = String(fecha.getFullYear());
+
+	var hora = String(fecha.getHours()).padStart(2, '0');
+	var minutos = String(fecha.getMinutes()).padStart(2, '0');
+	var segundos = String(fecha.getSeconds()).padStart(2, '0');
+
+	var stringFecha = dia+'/'+mes+'/'+anio+' - '+hora+':'+ minutos+':'+segundos;
+
+	return stringFecha;
+}
+
+var cargarPartida = function(objeto)
+{
+	objeto.fecha = generarFecha();
+	objeto.nombre = nombre.value;
+	objeto.nivel = nivel;
+	objeto.puntaje = puntajeFinal;
+}
+
+var calcularPuntajeFinal = function()
+{
+	puntajeFinal = puntos - (Math.floor(tiempo/5));
+	puntajeFinalText.textContent = puntajeFinal;
+}
+
+//Local Storage
+var juegoTerminado = function()
+{
+	calcularPuntajeFinal();
+	clearInterval(contador);
+
+	var resPartida = new Object();
+	cargarPartida(resPartida);
+
+	var listaPartidas = obtenerListaPartidas();
+	listaPartidas.push(resPartida);
+
+    localStorage.setItem('Partidas', JSON.stringify(listaPartidas));
+	console.log(JSON.stringify(listaPartidas))
+
+	mostrar(modalJuegoTerminado);
+}
+
 var checkColor = function()
 {
 	if (secuencia[i] === jugador[i])
@@ -190,15 +254,9 @@ var temporizador = function()
 	tiempoText.textContent = tiempo;
 }
 
-var resetearJugador = function()
+function eventoJugar()
 {
-	i = 0;
-	jugador = [];
-}
-
-function jugarEventHandler()
-{
-	if (!enJuego && checkNombre())
+	if (!enJuego && checkearNombre())
 	{
 		nombre.disabled = true;
 		enJuego = true;
@@ -207,7 +265,7 @@ function jugarEventHandler()
 	}
 }
 
-function resetEventHandler()
+function eventoResetear()
 {
 	mostrar(modalJuegoTerminado);
 	nombre.disabled = false;
@@ -228,7 +286,7 @@ function resetEventHandler()
 	console.log('click en reset');
 }
 
-function rojoEventHandler()
+function eventoRojo()
 {
 	if (enJuego)
 	{
@@ -240,7 +298,7 @@ function rojoEventHandler()
 	console.log('click en rojo');
 }
 
-function amarilloEventHandler()
+function eventoAmarillo()
 {
 	if (enJuego)
 	{
@@ -252,7 +310,7 @@ function amarilloEventHandler()
 	console.log('click en amarillo');
 }
 
-function verdeEventHandler()
+function eventoVerde()
 {
 	if (enJuego)
 	{
@@ -265,7 +323,7 @@ function verdeEventHandler()
 	console.log('click en verde');
 }
 
-function azulEventHandler()
+function eventoAzul()
 {
 	if (enJuego)
 	{
@@ -278,6 +336,21 @@ function azulEventHandler()
 	console.log('click en azul');
 }
 
+//Llenar tabla de puntuaciones
+var llenarTabla = function(top)
+{
+	contenidoTabla.innerHTML = '';
+
+	top.forEach((partida) =>{
+		var fila = document.createElement('tr');
+		fila.innerHTML ='<td>'+partida.fecha+'</td>'+
+						'<td>'+partida.nombre+'</td>'+
+						'<td>'+partida.nivel+'</td>'+
+						'<td>'+partida.puntaje+'</td>';
+		contenidoTabla.appendChild(fila);
+	});
+}
+
 var mejoresDiez = function()
 {
 	var listaPartidas = obtenerListaPartidas();
@@ -286,107 +359,32 @@ var mejoresDiez = function()
 	return top;
 }
 
-//Llenar tabla de puntuaciones
-var llenarTabla = function(top)
-{
-	contenidoTabla.innerHTML = "";
-
-	top.forEach((partida) =>{
-		var fila = document.createElement('tr');
-		fila.innerHTML ="<td>"+partida.fecha+"</td>"+
-						"<td>"+partida.nombre+"</td>"+
-						"<td>"+partida.nivel+"</td>"+
-						"<td>"+partida.puntaje+"</td>";
-		contenidoTabla.appendChild(fila);
-	});
-}
-
-var calcularPuntajeFinal = function()
-{
-	puntajeFinal = puntos - (Math.floor(tiempo/5));
-	puntajeFinalText.textContent = puntajeFinal;
-}
-
-//Local Storage
-var juegoTerminado = function()
-{
-	calcularPuntajeFinal();
-	clearInterval(contador);
-
-	var resPartida = new Object();
-	cargarPartida(resPartida);
-
-	var listaPartidas = obtenerListaPartidas();
-	listaPartidas.push(resPartida);
-
-    localStorage.setItem("Partidas", JSON.stringify(listaPartidas));
-	console.log(JSON.stringify(listaPartidas))
-
-	mostrar(modalJuegoTerminado);
-}
-
-var obtenerListaPartidas = function()
-{
-	var listaPartidas = localStorage.getItem("Partidas");		//si no existe devuelve una lista vacia
-	if (!listaPartidas)	
-	{
-		return [];
-	}
-
-	return JSON.parse(listaPartidas);
-}
-
-var cargarPartida = function(objeto)
-{
-	objeto.fecha = generarFecha();
-	objeto.nombre = nombre.value;
-	objeto.nivel = nivel;
-	objeto.puntaje = puntajeFinal;
-}
-
-function generarFecha()
-{
-	var fecha = new Date();
-
-	var dia = String(fecha.getDate()).padStart(2, "0");
-	var mes = String(fecha.getMonth() + 1).padStart(2, "0");
-	var anio = String(fecha.getFullYear());
-
-	var hora = String(fecha.getHours()).padStart(2, "0");
-	var minutos = String(fecha.getMinutes()).padStart(2, "0");
-	var segundos = String(fecha.getSeconds()).padStart(2, "0");
-
-	var stringFecha = dia+"/"+mes+"/"+anio+" - "+hora+":"+ minutos+":"+segundos;
-
-	return stringFecha;
-}
-
 function ordenarTablaFecha()
 {
 	var top = mejoresDiez()
 
-	if (direccionFecha == "des")
+	if (direccionFecha == 'des')
 	{
 		top.sort(function (a, b) { return b.fecha.localeCompare(a.fecha)});
 
-		fDes.style.display = "inline";
-		fAsc.style.display = "none";
+		fDes.style.display = 'inline';
+		fAsc.style.display = 'none';
 
-		pDes.style.display = "none";
-		pAsc.style.display = "none";
+		pDes.style.display = 'none';
+		pAsc.style.display = 'none';
 
-		direccionFecha = "asc";
+		direccionFecha = 'asc';
 	}
 	else
 	{
 		top.sort(function (a, b) { return a.fecha.localeCompare(b.fecha)});
-		fDes.style.display = "none";
-		fAsc.style.display = "inline";
+		fDes.style.display = 'none';
+		fAsc.style.display = 'inline';
 
-		pDes.style.display = "none";
-		pAsc.style.display = "none";
+		pDes.style.display = 'none';
+		pAsc.style.display = 'none';
 
-		direccionFecha = "des";
+		direccionFecha = 'des';
 	}
 
 	llenarTabla(top);
@@ -396,29 +394,29 @@ function ordenarTablaPuntaje()
 {
 	var top = mejoresDiez()
 
-	if (direccionPuntaje == "des")
+	if (direccionPuntaje == 'des')
 	{
 		top.sort((a, b) => b.puntaje - a.puntaje);;
 
-		pDes.style.display = "inline";
-		pAsc.style.display = "none";
+		pDes.style.display = 'inline';
+		pAsc.style.display = 'none';
 
-		fDes.style.display = "none";
-		fAsc.style.display = "none";
+		fDes.style.display = 'none';
+		fAsc.style.display = 'none';
 
-		direccionPuntaje = "asc";
+		direccionPuntaje = 'asc';
 	}
 	else
 	{
 		top.sort((a, b) => a.puntaje - b.puntaje);
 
-		pDes.style.display = "none";
-		pAsc.style.display = "inline";
+		pDes.style.display = 'none';
+		pAsc.style.display = 'inline';
 
-		fDes.style.display = "none";
-		fAsc.style.display = "none";
+		fDes.style.display = 'none';
+		fAsc.style.display = 'none';
 
-		direccionPuntaje = "des";
+		direccionPuntaje = 'des';
 	}
 
 	llenarTabla(top);
