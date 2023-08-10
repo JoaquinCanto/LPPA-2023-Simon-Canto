@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="./CSS/reset.css">
 	<link rel="stylesheet" type="text/css" href="./CSS/style.css">
 	
+	<link rel="shortcut icon" href="./Images/Simon.ico">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Tektur:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -31,7 +32,7 @@
 			ayudándose de su memoria visual y sonora. Si lo consigue, este responderá con una secuencia más 
 			larga, y así sucesivamente. Si falla, el usuario debe volver a empezar.
 		</p>
-		<p id="cerrarI" class="iconoX">&#10006;</p>
+		<div id="cerrarI" class="iconoX">&#10006;</div>
 	</div>
 </div>
 <div id="modalTD" class="modal">
@@ -40,10 +41,10 @@
 		<table id="tablaPuntuaciones">
 			<thead>
 				<tr>
-					<th id="ordenFecha">Fecha</th>
+					<th id="ordenFecha">Fecha <span id="fDes">&#8642;</span><span id="fAsc">&#8639;</span></th>
 					<th>Nombre</th>
 					<th>Nivel</th>
-					<th id="ordenPuntaje">Puntuación</th>
+					<th id="ordenPuntaje">Puntuación <span id="pDes">&#8642;</span><span id="pAsc">&#8639;</span></th>
 				</tr>
 			</thead>
 			<tbody id="tablaContenido"></tbody>
@@ -53,14 +54,14 @@
 </div>
 <main>
 	<form class="formulario">
-		<input id="nombre" class="campo" type="text" name="nombre" placeholder="Nombre">
+		<input id="nombreContacto" class="campo" type="text" name="nombre" placeholder="Nombre">
 		<p id="alertaNombre" class="alerta" >Debe tener más de 6 letras y al menos un espacio entre medio.</p>
 
 		<input id="email" class="campo" type="email" name="email" placeholder="Email">
 		<p id="alertaEmail" class="alerta">Debe tener un formato de email válido.</p>
 
 		<textarea id="mensaje" class="campo" name="mensaje" rows="5" placeholder="Tu mensaje..."></textarea>
-		<p id="alertaMensaje" class="alerta">Debe tener un formato de email válido.</p>
+		<p id="alertaMensaje" class="alerta">El mensaje debe contener como minimo seis caracteres.</p>
 
 		<input id="enviar" class="enviar"  type="button" value="Enviar">
 	</form>

@@ -1,7 +1,7 @@
 'use strict'
 
 //Variables
-var nombre = document.getElementById('nombre');
+var nombre = document.getElementById('nombreContacto');
 var alertaNombre = document.getElementById('alertaNombre');
 
 var email = document.getElementById('email');
