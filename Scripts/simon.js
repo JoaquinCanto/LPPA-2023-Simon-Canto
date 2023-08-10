@@ -3,40 +3,67 @@
 //Botones
 var jugar = document.getElementById('jugarBtn');
 var reset = document.getElementById('reiniciarBtn');
-var test = document.getElementById('test');				//boton de testeo 
+
+var instruccionesBtn = document.getElementById('instruccionesBtn');
+var cerrarModalI = document.getElementById('cerrarI');
+
+var topBtn = document.getElementById('topBtn');
+var cerrarModalTD = document.getElementById('cerrarTD');
 
 var rojo = document.getElementById('rojo');
 var amarillo = document.getElementById('amarillo');
 var verde = document.getElementById('verde');
 var azul = document.getElementById('azul');
 
-//Variables
+//Partes de la pagina
 var nombre = document.getElementById('nombre');
 var nombreAlerta = document.getElementById('nombreAlerta');
 
 var puntosText = document.getElementById('puntos');
 var nivelText = document.getElementById('nivel');
-var contadorText = document.getElementById('contador');
+var tiempoText = document.getElementById('contador');
 var puntajeFinalText = document.getElementById('puntajeFinal');
 
 var modalJuegoTerminado = document.getElementById('modalJT');
+var contenidoTabla = document.getElementById('tablaContenido');
+var modalInstrucciones = document.getElementById('modalI');
+var modalTopDiez = document.getElementById('modalTD');
 
+var ordenarFecha = document.getElementById('ordenFecha');
+var fDes = document.getElementById('fDes');
+var fAsc = document.getElementById('fAsc');
+
+var ordenarPuntaje = document.getElementById('ordenPuntaje');
+var pDes = document.getElementById('pDes');
+var pAsc = document.getElementById('pAsc');
+
+//Regular Expresion
 var alfRegEx = /^[a-zA-Z]+$/;
 
+//Variables globales
 var puntos = 0;
 var puntajeFinal = 0;
 var nivel = 0;
-var tiempo = 0;								//tiempo transcurrido en el juego
-var contador;								//contiene el ID de setInterval para despues poder detenerlo
+var tiempo = 0;								//Tiempo transcurrido en el juego.
+var contador;								//contiene el ID de setInterval para despues poder detenerlo.
 var secuencia = [];
 var jugador = [];
 var colores = ['rojo', 'amarillo', 'azul', 'verde'];
-var enJuego = false; 						//variable global para indicar el estado del juego
+var enJuego = false; 						//variable global para indicar el estado del juego.
 var i = 0; 									//variable global que se usa en checkColor()
+var direccionFecha = "des";
+var direccionPuntaje = "asc";
 
 //Eventos
 nombre.addEventListener('blur', checkNombre);
 nombre.addEventListener('focus', esconder);
+
+instruccionesBtn.addEventListener('click', function(){ mostrar(modalInstrucciones) });
+cerrarModalI.addEventListener('click', function(){ mostrar(modalInstrucciones) });
+topBtn.addEventListener('click', function(){ mostrar(modalTopDiez) });
+cerrarModalTD.addEventListener('click', function(){ mostrar(modalTopDiez) });
+ordenarFecha.addEventListener('click', ordenarTablaFecha);
+ordenarPuntaje.addEventListener('click', ordenarTablaPuntaje);
 
 jugar.addEventListener('click', jugarEventHandler);
 reset.addEventListener('click', resetEventHandler);
@@ -64,6 +91,24 @@ function esconder()
 {
 	nombreAlerta.style.visibility = 'hidden';
 }
+
+function mostrar(id)
+{
+	id.classList.toggle('mostrar');
+
+	if(id === modalTopDiez)
+	{
+		fDes.style.display = "none";
+		fAsc.style.display = "none";
+
+		pDes.style.display = "inline";
+		pAsc.style.display = "none";
+		var top = mejoresDiez();
+		llenarTabla(top);
+	}
+}
+
+
 
 var interruptor = function(id)
 {
@@ -142,7 +187,7 @@ var checkColor = function()
 var temporizador = function()
 {
 	tiempo++;
-	contadorText.textContent = tiempo;
+	tiempoText.textContent = tiempo;
 }
 
 var resetearJugador = function()
@@ -155,6 +200,7 @@ function jugarEventHandler()
 {
 	if (!enJuego && checkNombre())
 	{
+		nombre.disabled = true;
 		enJuego = true;
 		generarSecuencia();
 		contador = setInterval(temporizador, 1000);
@@ -163,20 +209,22 @@ function jugarEventHandler()
 
 function resetEventHandler()
 {
-	modalJuegoTerminado.style.display = 'none';
+	mostrar(modalJuegoTerminado);
+	nombre.disabled = false;
 	enJuego = false;
 
 	puntos = 0;
+	puntajeFinal = 0;
 	nivel = 0;
 	tiempo = 0;
 
 	nivelText.textContent = '-';
 	puntosText.textContent = puntos;
-	contadorText.textContent = tiempo;
+	tiempoText.textContent = tiempo;
 
 	secuencia = [];
 	resetearJugador();
-	clearInterval(contador);
+	
 	console.log('click en reset');
 }
 
@@ -230,6 +278,29 @@ function azulEventHandler()
 	console.log('click en azul');
 }
 
+var mejoresDiez = function()
+{
+	var listaPartidas = obtenerListaPartidas();
+	listaPartidas.sort((a, b) => b.puntaje - a.puntaje);
+	var top = listaPartidas.slice(0, 10);
+	return top;
+}
+
+//Llenar tabla de puntuaciones
+var llenarTabla = function(top)
+{
+	contenidoTabla.innerHTML = "";
+
+	top.forEach((partida) =>{
+		var fila = document.createElement('tr');
+		fila.innerHTML ="<td>"+partida.fecha+"</td>"+
+						"<td>"+partida.nombre+"</td>"+
+						"<td>"+partida.nivel+"</td>"+
+						"<td>"+partida.puntaje+"</td>";
+		contenidoTabla.appendChild(fila);
+	});
+}
+
 var calcularPuntajeFinal = function()
 {
 	puntajeFinal = puntos - (Math.floor(tiempo/5));
@@ -237,11 +308,11 @@ var calcularPuntajeFinal = function()
 }
 
 //Local Storage
-
 var juegoTerminado = function()
 {
 	calcularPuntajeFinal();
-	
+	clearInterval(contador);
+
 	var resPartida = new Object();
 	cargarPartida(resPartida);
 
@@ -250,10 +321,9 @@ var juegoTerminado = function()
 
     localStorage.setItem("Partidas", JSON.stringify(listaPartidas));
 	console.log(JSON.stringify(listaPartidas))
-	modalJuegoTerminado.style.display = 'block';
-}
 
-test.addEventListener('click', generarFecha)
+	mostrar(modalJuegoTerminado);
+}
 
 var obtenerListaPartidas = function()
 {
@@ -268,10 +338,10 @@ var obtenerListaPartidas = function()
 
 var cargarPartida = function(objeto)
 {
-	objeto.nombre = nombre.value;
-	objeto.puntaje = puntajeFinal;
-	objeto.nivel = nivel;
 	objeto.fecha = generarFecha();
+	objeto.nombre = nombre.value;
+	objeto.nivel = nivel;
+	objeto.puntaje = puntajeFinal;
 }
 
 function generarFecha()
@@ -289,4 +359,67 @@ function generarFecha()
 	var stringFecha = dia+"/"+mes+"/"+anio+" - "+hora+":"+ minutos+":"+segundos;
 
 	return stringFecha;
+}
+
+function ordenarTablaFecha()
+{
+	var top = mejoresDiez()
+
+	if (direccionFecha == "des")
+	{
+		top.sort(function (a, b) { return b.fecha.localeCompare(a.fecha)});
+
+		fDes.style.display = "inline";
+		fAsc.style.display = "none";
+
+		pDes.style.display = "none";
+		pAsc.style.display = "none";
+
+		direccionFecha = "asc";
+	}
+	else
+	{
+		top.sort(function (a, b) { return a.fecha.localeCompare(b.fecha)});
+		fDes.style.display = "none";
+		fAsc.style.display = "inline";
+
+		pDes.style.display = "none";
+		pAsc.style.display = "none";
+
+		direccionFecha = "des";
+	}
+
+	llenarTabla(top);
+}
+
+function ordenarTablaPuntaje()
+{
+	var top = mejoresDiez()
+
+	if (direccionPuntaje == "des")
+	{
+		top.sort((a, b) => b.puntaje - a.puntaje);;
+
+		pDes.style.display = "inline";
+		pAsc.style.display = "none";
+
+		fDes.style.display = "none";
+		fAsc.style.display = "none";
+
+		direccionPuntaje = "asc";
+	}
+	else
+	{
+		top.sort((a, b) => a.puntaje - b.puntaje);
+
+		pDes.style.display = "none";
+		pAsc.style.display = "inline";
+
+		fDes.style.display = "none";
+		fAsc.style.display = "none";
+
+		direccionPuntaje = "des";
+	}
+
+	llenarTabla(top);
 }

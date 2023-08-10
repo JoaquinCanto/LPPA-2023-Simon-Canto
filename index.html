@@ -6,49 +6,69 @@
 	<title>Simon Dice</title>
 	<link rel="stylesheet" type="text/css" href="./CSS/reset.css">
 	<link rel="stylesheet" type="text/css" href="./CSS/style.css">
-	
+
+	<link rel="shortcut icon" href="./Images/Simon.ico">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Tektur:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Handjet&family=Quicksand&family=Tektur:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 <header>
 	<a href="./index.html"><h1>Simon Dice</h1></a>
 	<nav>
 		<ul>
-			<li><a href="./index.html#inst">Instrucciones</a></li>
-			<li><a href="./index.html#puntajes">Top 10</a></li>
+			<li><a id="instruccionesBtn" href="#modalI">Instrucciones</a></li>
+			<li><a id="topBtn" href="#modalTD">Top 10</a></li>
 			<li><a href="./contacto.html">Contacto</a></li>
 		</ul>
 	</nav>
 	<div class="separador"></div>
 </header>
-<main>
-	<div id="modalJT" class="modal">
-		<div class="juegoTerminado">
-			<h2>Juego Terminado</h2>
-			<p>Tu puntaje fue de:</p>
-			<p id="puntajeFinal"></p>
-			<button id="reiniciarBtn" class="control">Reiniciar</button>
-		</div>
+<div id="modalJT" class="modal">
+	<div class="juegoTerminado">
+		<h2>Juego Terminado</h2>
+		<p>Tu puntaje fue de:</p>
+		<p id="puntajeFinal"></p>
+		<button id="reiniciarBtn" class="control">&#8635;</button>
 	</div>
-	<div id="instrucciones" class="modal">
-		<a id="inst"><h2>Instrucciones</h2></a>
+</div>
+<div id="modalI" class="modal">
+	<div class="instrucciones">
+		<h2>Instrucciones</h2>
 		<p>El juego de forma aleatoria va iluminando los cuadrantes de colores. 
 			Después de esperar, el usuario debe ir introduciendo la secuencia mostrada en el orden correcto, 
 			ayudándose de su memoria visual y sonora. Si lo consigue, este responderá con una secuencia más 
 			larga, y así sucesivamente. Si falla, el usuario debe volver a empezar.
 		</p>
+		<div id="cerrarI" class="iconoX">&#10006;</div>
+	</div>
+</div>
+<div id="modalTD" class="modal">
+	<div class="topDiez">
+		<a id="puntajes"><h2>Top 10:</h2></a>
+		<table id="tablaPuntuaciones">
+			<thead>
+				<tr>
+					<th id="ordenFecha">Fecha <span id="fDes">&#8642;</span><span id="fAsc">&#8639;</span></th>
+					<th>Nombre</th>
+					<th>Nivel</th>
+					<th id="ordenPuntaje">Puntuación <span id="pDes">&#8642;</span><span id="pAsc">&#8639;</span></th>
+				</tr>
+			</thead>
+			<tbody id="tablaContenido"></tbody>
+		</table>
+		<p id="cerrarTD" class="iconoX">&#10006;</p>
+	</div>
+</div>
+<main>
+	<div class="formNombre">
+		<input id="nombre" type="text" placeholder="¡Ingresa tu nombre!">
+		<p id="nombreAlerta" class="alerta">Deben ser tres letras como minimo.</p>
 	</div>
 	<div class="contenedorTS">
-		<div class="formNombre">
-			<input id="nombre" type="text" placeholder="¡Ingresa tu nombre!">
-			<p id="nombreAlerta">Deben ser tres letras como minimo.</p>
-		</div>
 		<div class="tablero">
 			<div class="controles">
-				<button id="jugarBtn" class="control">Jugar</button>
-				<button id="test" class="control">Test</button>
+				<button id="jugarBtn" class="control">&#9654;</button>
 			</div>
 			<div class="datos">
 				<div class="niveles">
@@ -72,22 +92,6 @@
 			<button id="azul" class="color" ></button>
 		</div>
 	</div>
-	<div class="topDiez">
-		<a id="puntajes"><h2>Top 10:</h2></a>
-		<ol>
-			<li>Aasjkfhlksadfhalsfj</li>
-			<li>B</li>
-			<li>C</li>
-			<li>D</li>
-			<li>E</li>
-			<li>F</li>
-			<li>G</li>
-			<li>H</li>
-			<li>I</li>
-			<li>J</li>
-		</ol>
-	</div>
-	
 </main>
 <footer>
 	<div class="separador"></div>
